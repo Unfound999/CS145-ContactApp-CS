@@ -1,7 +1,5 @@
 ﻿using System;
 
-using System;
-
 public class Contact : IComparable<Contact>
 {
     private string fName;
@@ -31,7 +29,7 @@ public class Contact : IComparable<Contact>
 
 
     // override
-    public int CompareTo(Contact obj)
+    public int CompareTo(Contact inputName)
     {
         string chars = "abcdefghijklmnopqrstuvwxyz";
         bool fNameEnd = false;
@@ -40,6 +38,66 @@ public class Contact : IComparable<Contact>
         int fNameIndex;
         int inputFNameIndex;
 
-        return 0;
+        fNameIndex = chars.IndexOf(this.fName.ToLower().ToCharArray()[0]);
+        inputFNameIndex = chars.IndexOf(inputName.fName.ToLower().ToCharArray()[0]);
+
+        if (inputFNameIndex > fNameIndex)
+        {
+            return 1;
+        } else if (inputFNameIndex < fNameIndex)
+        {
+            return -1;
+        }
+
+        while (true)
+        {
+            try
+            {
+                fNameIndex = chars.IndexOf(this.fName.ToLower().ToCharArray()[charCounter]);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                fNameEnd = true;
+            }
+
+            try
+            {
+                inputFNameIndex = chars.IndexOf(inputName.fName.ToLower().ToCharArray()[charCounter]);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                inputFNameEnd = true;
+            }
+
+            if (fNameEnd && inputFNameEnd)
+            {
+                return lNameCompare(inputName);
+            }
+            else if (inputFNameEnd)
+            {
+                return 1;
+            }
+            else if (fNameEnd)
+            {
+                return -1;
+            }
+            else
+            {
+                if (inputFNameIndex > fNameIndex)
+                {
+                    return 1;
+                }
+                else if (inputFNameIndex < fNameIndex)
+                {
+                    return -1;
+                }
+            }
+            charCounter++;
+        }
+    }
+
+    private int lNameCompare(Contact inputName)
+    {
+
     }
 }
