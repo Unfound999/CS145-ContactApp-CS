@@ -98,6 +98,69 @@ public class Contact : IComparable<Contact>
 
     private int lNameCompare(Contact inputName)
     {
+        string chars = "abcdefghijklmnopqrstuvwxyz";
+        bool lNameEnd = false;
+        bool inputLNameEnd = false;
+        int charCounter = 1;
+        int lNameIndex;
+        int inputLNameIndex;
 
+        lNameIndex = chars.IndexOf(this.lName.ToLower().ToCharArray()[0]);
+        inputLNameIndex = chars.IndexOf(inputName.lName.ToLower().ToCharArray()[0]);
+
+        if (inputLNameIndex > lNameIndex)
+        {
+            return 1;
+        }
+        else if (inputLNameIndex < lNameIndex)
+        {
+            return -1;
+        }
+
+        while (true)
+        {
+            try
+            {
+                lNameIndex = chars.IndexOf(this.lName.ToLower().ToCharArray()[charCounter]);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                lNameEnd = true;
+            }
+
+            try
+            {
+                inputLNameIndex = chars.IndexOf(inputName.lName.ToLower().ToCharArray()[charCounter]);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                inputLNameEnd = true;
+            }
+
+            if (lNameEnd && inputLNameEnd)
+            {
+                return 0;
+            }
+            else if (inputLNameEnd)
+            {
+                return 1;
+            }
+            else if (lNameEnd)
+            {
+                return -1;
+            }
+            else
+            {
+                if (inputLNameIndex > lNameIndex)
+                {
+                    return 1;
+                }
+                else if (inputLNameIndex < lNameIndex)
+                {
+                    return -1;
+                }
+            }
+            charCounter++;
+        }
     }
 }
