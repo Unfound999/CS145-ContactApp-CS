@@ -28,7 +28,7 @@ public class Contact : IComparable<Contact>
 
 
 
-    // override
+    //  override
     public int CompareTo(Contact inputName)
     {
         string chars = "abcdefghijklmnopqrstuvwxyz";
@@ -162,5 +162,11 @@ public class Contact : IComparable<Contact>
             }
             charCounter++;
         }
+    }
+
+    //  override
+    public String toString()
+    {
+        return String.Format("\"Name: %s %s, Email: %s, Phone: %s, Address: %s, Zip: %d\"", fName, lName, email, phoneNum, address, zipCode);
     }
 }
