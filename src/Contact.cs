@@ -165,6 +165,24 @@ public class Contact : IComparable<Contact>
     }
 
     //  override
+    public bool equals(Contact obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj.GetType() == typeof(Contact))
+        {
+            Contact trueObj = (Contact)obj;
+            if (this.fName == trueObj.fName && this.lName == trueObj.lName && this.phoneNum == trueObj.phoneNum && this.address == trueObj.address && this.zipCode == trueObj.zipCode && this.email == trueObj.email)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //  override
     public String toString()
     {
         return String.Format("\"Name: %s %s, Email: %s, Phone: %s, Address: %s, Zip: %d\"", fName, lName, email, phoneNum, address, zipCode);
