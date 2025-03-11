@@ -1,5 +1,7 @@
 ﻿using System;
 
+namespace src;
+
 public class BinarySearchNode<T> : IComparable where T : IComparable 
 {
     private T value;

@@ -1,5 +1,7 @@
 ﻿using System;
 
+namespace src;
+
 public class Contact : IComparable<Contact>
 {
     private string fName;
