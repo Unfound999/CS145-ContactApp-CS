@@ -183,10 +183,7 @@ public class BinarySearchTree<T> where T : IComparable
             while (currNode != null)
             {
                 nodeStack.Push(currNode);
-                if (currNode.Left != null)
-                {
-                    currNode = currNode.Left;
-                }
+                currNode = currNode.Left;
             }
 
             currNode = nodeStack.Pop();
@@ -204,7 +201,49 @@ public class BinarySearchTree<T> where T : IComparable
 
     private BinaryTreeNode<T> GetPostOrder(T value)
     {
+        Stack<BinaryTreeNode<T>> nodeStack = new Stack<BinaryTreeNode<T>>();
+        Stack<BinaryTreeNode<T>> parentStack = new Stack<BinaryTreeNode<T>>();
+        BinaryTreeNode<T>? currNode = root;
 
+        while (currNode != null || nodeStack.Count > 0)
+        {
+            while (currNode != null || parentStack.Count > 0)
+            {
+                if (!nodeStack.Contains(currNode))
+                {
+                    nodeStack.Push(currNode);
+                }
+                if (currNode.Right != null)
+                {
+                    currNode = currNode.Right;
+                    continue;
+                }
+                if (parentStack.Count > 0)
+                {
+                    currNode = parentStack.Pop();
+                    if (currNode.Left != null)
+                    {
+                        currNode = currNode.Left;
+                    }
+                    else if (currNode.Right != null)
+                    {
+                        currNode = currNode.Right;
+                    }
+                }
+                else
+                {
+                    currNode = null;
+                }
+            }
+
+            currNode = nodeStack.Pop();
+            if (currNode.Value.Equals(value))
+            {
+                return currNode;
+            }
+            currNode = null;
+        }
+        throw new NodeNotFoundException();
     }
 
 }
