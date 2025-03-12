@@ -18,7 +18,7 @@ class ContactMain
         do
         {
             Console.Write("Please enter which option you would like!:");
-            Console.Write("Options include: \"AC\" to add a contact, \"VC\" to view a contact \"RC\" to remove a contact, \"VAC\" to view all contacts, or \"Q\" to quit!.");
+            Console.Write("Options include: \n\"AC\" to add a contact\n\"VC\" to view a contact\n\"RC\" to remove a contact\n\"VAC\" to view all contacts\n\"Q\" to quit!.");
             string answer = Console.ReadLine();
             switch (answer)
             {

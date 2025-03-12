@@ -202,7 +202,7 @@ public class Contact : IComparable
      *  checks if inputted object is a Contact object and if so
      *  checks if both objects contain the same first name, last name, and phonenumber
      */
-    public bool equals(Contact obj)
+    public bool Equals(Contact obj)
     {
         if (this == obj)
         {
@@ -223,7 +223,7 @@ public class Contact : IComparable
 
     //  overrides toString method
     //  prints out all data within Contact object
-    public String toString()
+    public override String ToString()
     {
         return String.Format("\"Name: %s %s, Email: %s, Phone: %s, Address: %s, Zip: %d\"", fName, lName, email, phoneNum, address, zipCode);
     }
