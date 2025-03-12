@@ -12,7 +12,7 @@ public class Contact : IComparable
     private string email;
 
     //  Constructor for Contact object
-    public Contact(string fName, string lName, string phoneNum, string address, int zipCode, string email)
+    public Contact(string address, string email, string fName, string lName, string phoneNum, int zipCode)
     {
         this.fName = fName;
         this.lName = lName;
