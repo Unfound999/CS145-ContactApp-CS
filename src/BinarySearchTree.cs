@@ -246,4 +246,66 @@ public class BinarySearchTree<T> where T : IComparable
         throw new NodeNotFoundException();
     }
 
+    public Boolean Contains(T value)
+    {
+        try
+        {
+            this.GetSearch(value);
+            return true;
+        }
+        catch (NodeNotFoundException _)
+        {
+            return false;
+        }
+    }
+
+    private BinaryTreeNode<T> GetParentNode(T value)
+    {
+        BinaryTreeNode<T>? parent = null;
+        BinaryTreeNode<T> current = root;
+        while (current != null)
+        {
+            int compareVal = current.Value.CompareTo(value);
+            if (compareVal == 0)
+            {
+                return parent;
+            }
+            parent = current;
+            if (compareVal > 0)
+            {
+                current = current.Left;
+            }
+            if (compareVal < 0)
+            {
+                current = current.Right;
+            }
+        }
+        throw new NodeNotFoundException();
+    }
+
+    public void Remove(T value)
+    {
+        BinaryTreeNode<T> removeNode = this.GetPostOrder(value);
+        if (removeNode.Left == null)
+        {
+            BinaryTreeNode<T> parent = this.GetParentNode(value);
+            if(parent.Left == removeNode)
+            {
+                parent.Left = null;
+            }
+            if (parent.Right == removeNode)
+            {
+                parent.Right = null;
+            }
+            return;
+        }
+
+        while (removeNode != null)
+        {
+            BinaryTreeNode<T> leftNode = removeNode.Left;
+            removeNode.Value = leftNode.Value;
+            removeNode.Left = leftNode.Left;
+            removeNode = removeNode.Left;
+        }
+    }
 }
