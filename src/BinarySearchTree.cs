@@ -3,14 +3,19 @@ using System.Collections;
 
 namespace src;
 
-//  Unsure how to translate implement IComparable class. It currently does not work (Check errors on Error List)
+public class NodeNotFoundException : Exception
+{
+
+}
+
 public class BinarySearchTree<T> where T : IComparable 
 {
-    enum SearchType
+    public enum SearchType
     {
         PREORDER,
         INORDER,
-        POSTORDER
+        POSTORDER,
+        SEARCH
     }
 
     private BinaryTreeNode<T>? root;
@@ -25,7 +30,7 @@ public class BinarySearchTree<T> where T : IComparable
         this.root = new BinaryTreeNode<T>(value);
     }
 
-    public void add(T newData)
+    public void Add(T newData)
     {
         if (root == null)
         {
@@ -59,4 +64,62 @@ public class BinarySearchTree<T> where T : IComparable
             }
         }
     }
+
+    public T Get(T value)
+    {
+        return this.GetPreOrder(value).Value;
+    }
+
+    public T Get(T value, SearchType searchType)
+    {
+        switch (searchType)
+        {
+            case SearchType.PREORDER:
+                return this.GetPreOrder(value).Value;
+            case SearchType.INORDER:
+                return this.GetInOrder(value).Value;
+            case SearchType.POSTORDER:
+                return this.GetPostOrder(value).Value;
+            case SearchType.SEARCH:
+                return this.GetSearch(value).Value;
+            default:
+                return this.GetInOrder(value).Value; // This really shouldn't ever happen, but worst case, we'll fall onto an InOrder search.
+        }
+    }
+
+    private BinaryTreeNode<T> GetSearch(T value)
+    {
+        BinaryTreeNode<T> current = root;
+        while (current != null)
+        {
+            int compareVal = current.Value.CompareTo(value);
+            if (compareVal == 0)
+            {
+                return current;
+            }
+            if (compareVal > 0)
+            {
+                current = current.Left;
+            }
+            if (compareVal < 0)
+            {
+                current = current.Right;
+            }
+        }
+        throw new NodeNotFoundException();
+    }
+
+    private BinaryTreeNode<T> GetPreOrder(T value)
+    {
+    }
+
+    private BinaryTreeNode<T> GetInOrder(T value)
+    {
+    }
+
+    private BinaryTreeNode<T> GetPostOrder(T value)
+    {
+
+    }
+
 }
