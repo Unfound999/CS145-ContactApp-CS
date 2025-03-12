@@ -111,6 +111,32 @@ public class BinarySearchTree<T> where T : IComparable
 
     private BinaryTreeNode<T> GetPreOrder(T value)
     {
+        Stack<BinaryTreeNode<T>> nodeStack = new Stack<BinaryTreeNode<T>>();
+        nodeStack.Push(root);
+
+        // C# lacks the stack.empty() method of Java, as such, we'll just do a count > 0.
+        while (nodeStack.Count > 0)
+        {
+            BinaryTreeNode<T> currNode = nodeStack.Pop();
+            if (currNode != null)
+            {
+                if (currNode.Value.Equals(value))
+                {
+                    return currNode;
+                }
+                if (currNode.Right != null)
+                {
+                    nodeStack.Push(currNode.Right);
+                }
+                if (currNode.Left != null)
+                {
+                    nodeStack.Push(currNode.Left);
+                }
+            }
+        }
+
+        throw new NodeNotFoundException();
+
     }
 
     private BinaryTreeNode<T> GetInOrder(T value)
