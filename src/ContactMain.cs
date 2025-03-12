@@ -11,7 +11,7 @@ class ContactMain
 {
     //Main method uses a menu to handle each option for adding, viewing, removing, viewing all, and quitting. This is done through
     //a switch case inside of a do while loop.
-    static void main(string[] args)
+    static void Main(string[] args)
     {
         BinarySearchTree<Contact> Tree = new BinarySearchTree<Contact>();
         bool running = true;
