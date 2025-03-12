@@ -11,11 +11,10 @@ class ContactMain
 {
     //Main method uses a menu to handle each option for adding, viewing, removing, viewing all, and quitting. This is done through
     //a switch case inside of a do while loop.
-    public static void main(string[] args)
+    static void main(string[] args)
     {
-        Scanner input = new Scanner(System.in);
-        BinarySearchTree<Contact> Tree = new BinarySearchTree<>();
-        boolean running = true;
+        BinarySearchTree<Contact> Tree = new BinarySearchTree<Contact>();
+        bool running = true;
         do
         {
             Console.Write("Please enter which option you would like!:");
@@ -23,21 +22,20 @@ class ContactMain
             string answer = Console.ReadLine();
             switch (answer)
             {
-                case "AC": addContactMain(Tree); break;
-                case "VC": viewContact(Tree); break;
-                case "RC": removeContact(Tree); break;
-                case "VAC": viewAllContacts(Tree); break;
+                case "AC": AddContactMain(Tree); break;
+                case "VC": ViewContact(Tree); break;
+                case "RC": RemoveContact(Tree); break;
+                case "VAC": ViewAllContacts(Tree); break;
                 case "Q": running = false; break;
                 default: Console.WriteLine("This is not a valid option!"); break;
             }
         } while (running);
     }
 
-    //addContactMain is a method that asks the user for key information for a contact. Then it creates a contact object with
+    //AddContactMain is a method that asks the user for key information for a contact. Then it creates a contact object with
     //all provided data and then adds that contact object to the tree with the add method.
-    public static void addContactMain(BinarySearchTree<Contact> Tree)
+    public static void AddContactMain(BinarySearchTree<Contact> Tree)
     {
-        Scanner input = new Scanner(System.in);
 
         Console.Write("Please provide the first name of the contact:");
         string fName = Console.ReadLine();
@@ -53,10 +51,10 @@ class ContactMain
             try
             {
                 Console.Write("Please provide the zip code of the contact:");
-                zip = input.nextInt();
+                zip = Int32.Parse(Console.ReadLine());
                 break;
             }
-            catch (InputMismatchException e)
+            catch (FormatException e)
             {
                 Console.Write("Sorry this is an invalid zip code!");
             }
@@ -71,7 +69,7 @@ class ContactMain
 
         try
         {
-            Tree.add(person);
+            Tree.Add(person);
             Console.Write("Contact Added!");
         }
         catch (DuplicateNodeException e)
@@ -82,7 +80,7 @@ class ContactMain
 
     //ViewContact is a method that asks a person for identifying information about a person. Then it instantiates a contact object
     //with that info and it Gets that person using the tree class with the Get method. Lastly it shows the person to the user.
-    public static void viewContact(BinarySearchTree<Contact> Tree)
+    public static void ViewContact(BinarySearchTree<Contact> Tree)
     {
         Console.Write("Please provide the first name of the contact:");
         string fName = Console.ReadLine();
@@ -130,9 +128,9 @@ class ContactMain
         }
     }
 
-    //viewAllContacts is a method that creates a arraylist through the GetAllInOrder method, then it loops through a for loop which
+    //ViewAllContacts is a method that creates a arraylist through the GetAllInOrder method, then it loops through a for loop which
     //prints out the every contacts information in the arraylist.
-    public static void viewAllContacts(BinarySearchTree<Contact> Tree)
+    public static void ViewAllContacts(BinarySearchTree<Contact> Tree)
     {
 
         List<Contact> allPeople = Tree.GetAllInOrder();
