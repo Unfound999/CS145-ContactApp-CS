@@ -17,6 +17,7 @@ public class BinaryTreeNode<T> where T : IComparable  // Translation: BinarySear
     public T Value
     {
         set { this.value = value; }
+        get => this.value;
     }
 
     public BinaryTreeNode<T> Left
