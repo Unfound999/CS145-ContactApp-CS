@@ -39,12 +39,13 @@ public class Contact : IComparable
       *  If both first names have the same amount of the same letters, call the lNameCompare method
      */
     //  override
-    public int CompareTo(Object inputName)
+    public int CompareTo(Object ogInputName)
     {
-        if (inputName.GetType() != typeof(Contact))
+        if (ogInputName.GetType() != typeof(Contact))
         {
             return -1;
         }
+        Contact inputName = (Contact)ogInputName;
         string chars = "abcdefghijklmnopqrstuvwxyz";
         string letterCheck;
         bool fNameEnd = false;
