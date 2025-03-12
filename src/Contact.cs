@@ -2,7 +2,7 @@
 
 namespace src;
 
-public class Contact : IComparable<Contact>
+public class Contact : IComparable
 {
     private string fName;
     private string lName;
@@ -31,8 +31,12 @@ public class Contact : IComparable<Contact>
 
 
     //  override
-    public int CompareTo(Contact inputName)
+    public int CompareTo(Object inputName)
     {
+        if (inputName.GetType() != typeof(Contact))
+        {
+            return -1;
+        }
         string chars = "abcdefghijklmnopqrstuvwxyz";
         bool fNameEnd = false;
         bool inputFNameEnd = false;
@@ -189,4 +193,5 @@ public class Contact : IComparable<Contact>
     {
         return String.Format("\"Name: %s %s, Email: %s, Phone: %s, Address: %s, Zip: %d\"", fName, lName, email, phoneNum, address, zipCode);
     }
+
 }
