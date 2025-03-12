@@ -1,15 +1,42 @@
-﻿using System;
+﻿/*
+ * Authors: Christopher Waschke, Brody Weinkauf, Jackson Jenks
+ * Assignment: Week 9 - Binary Search Trees
+ * Description: Contact Application Using Binary Search Tree
+ */
+
+using System;
 using System.Collections;
 
 namespace src;
 
+/*
+ * NodeNotFoundException Class
+ * Throws when a Node isn't found on the Binary Tree.
+ */
 public class NodeNotFoundException : Exception
 {
 
 }
 
+/*
+ * DuplicateNodeException Class
+ * Throws when a Node already exists on the Binary Tree.
+ */
+public class DuplicateNodeException: Exception
+{
+
+}
+
+/*
+ * A Generic BinarySearchTree Class.
+ * Type T must extend Comparable as to be used in the sorting of new nodes.
+ */
 public class BinarySearchTree<T> where T : IComparable 
 {
+    /*
+     * Enum SearchType
+     * Used to decide what type of traversal in the get method.
+     */
     public enum SearchType
     {
         PREORDER,
@@ -18,18 +45,35 @@ public class BinarySearchTree<T> where T : IComparable
         SEARCH
     }
 
-    private BinaryTreeNode<T>? root;
+    private BinaryTreeNode<T>? root; // The root Node of our Binary Tree.
 
+    /*
+    * Constructor Method
+    * 
+    * Creates a new BinarySearchTree, without an initial value for the root.
+    */
     public BinarySearchTree()
     {
         this.root = null;
     }
 
+    /*
+     * Constructor Method
+     * 
+     * Constructs a new BinarySearchTree object with an initial value for the root.
+     */
     public BinarySearchTree(T value)
     {
         this.root = new BinaryTreeNode<T>(value);
     }
 
+    /* 
+     * Void Method
+     * If the tree was initialized without a value, it sets the root to the new Node with value T.
+     * Otherwise this method uses the traditional binary search method to add a node to the tree.
+     * We added weights to the values of the First and Last names in the Contact class, which are used here to decide where to find the node.
+     * In a general since, this class, as it's generic, simply compares the two values till it find the right node to append our name to.
+     */
     public void Add(T newData)
     {
         if (root == null)
@@ -42,7 +86,7 @@ public class BinarySearchTree<T> where T : IComparable
         {
             if (currNode.Value.Equals(newData))
             {
-                throw new Exception();
+                throw new DuplicateNodeException();
             }
             if (currNode.Value.CompareTo(newData) > 0)
             {
@@ -65,11 +109,25 @@ public class BinarySearchTree<T> where T : IComparable
         }
     }
 
+    /*
+     * BinaryTreeNode<T> Method
+     * We default to a Pre-Order search, as such this method calls getPreOrder() directly and just returns the result.
+     * 
+     * Parameters:
+     * value (T) The value we're finding for.
+     */
     public T Get(T value)
     {
         return this.GetPreOrder(value).Value;
     }
 
+    /*
+     * OverLoad of T get Method
+     * This is just a switch case front-end to our internal different methods of traversal.
+     * Parameters:
+     *   value (T) The value we're finding for.
+     *   searchType (SearchType Enum) The type of tree traversal desired to find the node.
+     */
     public T Get(T value, SearchType searchType)
     {
         switch (searchType)
@@ -86,7 +144,14 @@ public class BinarySearchTree<T> where T : IComparable
                 return this.GetInOrder(value).Value; // This really shouldn't ever happen, but worst case, we'll fall onto an InOrder search.
         }
     }
-
+    /* BinaryTreeMethod<T> 
+     * This method uses the traditional binary search method to find a node in the tree.
+     * We added weights to the values of the First and Last names in the Contact class, which are used here to decide where to find the node.
+     * In a general since, this class, as it's generic, simply compares the two values till it find the right node.
+     * 
+     * Parameters:
+     *  value (T) The value we're finding for
+    */
     private BinaryTreeNode<T> GetSearch(T value)
     {
         BinaryTreeNode<T> current = root;
@@ -109,6 +174,18 @@ public class BinarySearchTree<T> where T : IComparable
         throw new NodeNotFoundException();
     }
 
+    /*
+     * BinaryTreeNode<T> method
+     * Traverses the Tree using the Pre-Order traversal style.
+     * First, we create a stack to use as a processing order of nodes.
+     * Unlike the other methods, we start by popping this node, to initially process the root.
+     * If the node isn't the one we are looking for, we add the right child, if it exists, to the stack for processing.
+     * We then add the left child to the tree for processing.
+     * We loop this process until we have searched every node in the tree for the value we are looking for.
+     * 
+     * Parameters:
+     *   value (T) The value we're finding for
+     */
     private BinaryTreeNode<T> GetPreOrder(T value)
     {
         Stack<BinaryTreeNode<T>> nodeStack = new Stack<BinaryTreeNode<T>>();
@@ -139,6 +216,17 @@ public class BinarySearchTree<T> where T : IComparable
 
     }
 
+    /*
+    * BinaryTreeNode<T> method
+    * Traverses the Binary Tree using the In Order traversal pattern. (Left->Root->Right)
+    * We dig through the nodes to the furthest left node. Adding each node to the stack as we go.
+    * Once we're at the bottom, we process the left most node. Then we process the center. Finally, we change currNode to the right most node.
+    * This will re-trigger our digging, if the node has left children, restarting the process.
+    * We do this process until we found the node that we are looking for, which will be returned.
+    * 
+    * Parameters:
+    *  value (T) The value we're finding for
+    */
     private BinaryTreeNode<T> GetInOrder(T value)
     {
         Stack<BinaryTreeNode<T>> nodeStack = new Stack<BinaryTreeNode<T>>();
@@ -170,6 +258,11 @@ public class BinarySearchTree<T> where T : IComparable
         throw new NodeNotFoundException();
     }
 
+    /*
+     * List<T> method. (ArrayList isn't recommended in C#, instead List<T> being used instead.)
+     * This method is the exact same as the method above, except instead of looking for any single node,
+     * We travel everyone adding each to a List to be returned later. Used for viewing every entry in the tree.
+     */
     public List<T> GetAllInOrder()
     {
         Stack<BinaryTreeNode<T>> nodeStack = new Stack<BinaryTreeNode<T>>();
@@ -199,6 +292,16 @@ public class BinarySearchTree<T> where T : IComparable
         return allValues;
     }
 
+    /*
+     * BinaryTreeNode<T> method
+     * Traverses the tree using the Post Order traversal method.
+     * We use two stacks to keep track the nodes that will be processed, once we leave finding the nodes
+     * And the use a separate stack, to keep track of which nodes are parent nodes, to be able to process and find the nodes to left
+     * After finding the nodes to the right. (Result in left->right->top when popped.)
+     * 
+     * Parameters:
+     *  value (T): The value of the node we're looking for.
+     */
     private BinaryTreeNode<T> GetPostOrder(T value)
     {
         Stack<BinaryTreeNode<T>> nodeStack = new Stack<BinaryTreeNode<T>>();
@@ -246,6 +349,13 @@ public class BinarySearchTree<T> where T : IComparable
         throw new NodeNotFoundException();
     }
 
+    /*
+     * Boolean Method
+     * Using the Search style, return if the desired value is in the tree.
+     * 
+     * Parameters:
+     *  value (T): The value of the node we're looking for.
+     */
     public Boolean Contains(T value)
     {
         try
@@ -259,6 +369,13 @@ public class BinarySearchTree<T> where T : IComparable
         }
     }
 
+    /*
+     * BinaryTreeNode<T> method.
+     * Private Method.
+     * Returns the node that is the parent of the value we're looking for. Used in removing.
+     * Parameters:
+     *  value (T): The value of the node we're looking for.
+     */
     private BinaryTreeNode<T> GetParentNode(T value)
     {
         BinaryTreeNode<T>? parent = null;
@@ -283,6 +400,13 @@ public class BinarySearchTree<T> where T : IComparable
         throw new NodeNotFoundException();
     }
 
+    /*
+     * Void Method
+     * Removes a tree from the Binary Tree node.
+     * Shifts every the left branch into the current value, while removing the current value.
+     * Parameters:
+     * value (T): The value of the node we're looking for.
+     */
     public void Remove(T value)
     {
         BinaryTreeNode<T> removeNode = this.GetPostOrder(value);
