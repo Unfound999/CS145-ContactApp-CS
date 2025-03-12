@@ -2,7 +2,7 @@
 
 namespace src;
 
-public class Contact : IComparable<Contact>
+public class Contact : IComparable
 {
     private string fName;
     private string lName;
@@ -38,8 +38,13 @@ public class Contact : IComparable<Contact>
       *  If one first name has less characters than the other or the names have a differing character, return a value
       *  If both first names have the same amount of the same letters, call the lNameCompare method
      */
-    public int CompareTo(Contact inputName)
+    //  override
+    public int CompareTo(Object inputName)
     {
+        if (inputName.GetType() != typeof(Contact))
+        {
+            return -1;
+        }
         string chars = "abcdefghijklmnopqrstuvwxyz";
         string letterCheck;
         bool fNameEnd = false;
@@ -221,4 +226,5 @@ public class Contact : IComparable<Contact>
     {
         return String.Format("\"Name: %s %s, Email: %s, Phone: %s, Address: %s, Zip: %d\"", fName, lName, email, phoneNum, address, zipCode);
     }
+
 }
