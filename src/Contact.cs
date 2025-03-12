@@ -41,42 +41,40 @@ public class Contact : IComparable<Contact>
     public int CompareTo(Contact inputName)
     {
         string chars = "abcdefghijklmnopqrstuvwxyz";
+        string letterCheck;
         bool fNameEnd = false;
         bool inputFNameEnd = false;
-        int charCounter = 1;
+        int charCounter = 0;
         int fNameIndex;
         int inputFNameIndex;
-
-        //  grabs value of first letter of both first names
-        fNameIndex = chars.IndexOf(this.fName.ToLower().ToCharArray()[0]);
-        inputFNameIndex = chars.IndexOf(inputName.fName.ToLower().ToCharArray()[0]);
-
-        // checks if first letters in both first names are the same
-        if (inputFNameIndex > fNameIndex)
-        {
-            return 1;
-        } else if (inputFNameIndex < fNameIndex)
-        {
-            return -1;
-        }
 
         // runs through every letter in both names until there is a differing character, a name ends, or both names have the same amount of same letters.
         while (true)
         {
-            //  grabs next character, if there are no new characters to grab the first name has ended
+            //  checks next character, if there are no new characters to check the first name has ended
+            //  if the next character is not a letter, return a -1
             try
             {
-                fNameIndex = chars.IndexOf(this.fName.ToLower().ToCharArray()[charCounter]);
+                letterCheck = String.Concat(this.fName.ToLower().ToCharArray()[charCounter]);
+                if (letterCheck.Contains("abcdefghijklmnopqrstuvwxyz"))
+                {
+                    return -1;
+                }
             }
             catch (IndexOutOfRangeException e)
             {
                 fNameEnd = true;
             }
 
-            //  grabs next character, if there are no new characters to grab the last name has ended
+            //  checks next character, if there are no new characters to check the last name has ended
+            //  if the next character is not a letter, return a -1
             try
             {
-                inputFNameIndex = chars.IndexOf(inputName.fName.ToLower().ToCharArray()[charCounter]);
+                letterCheck = String.Concat(inputName.fName.ToLower().ToCharArray()[charCounter]);
+                if (letterCheck.Contains("abcdefghijklmnopqrstuvwxyz"))
+                {
+                    return -1;
+                }
             }
             catch (IndexOutOfRangeException e)
             {
@@ -99,11 +97,13 @@ public class Contact : IComparable<Contact>
             }
             else
             {
-                if (inputFNameIndex > fNameIndex)
+                fNameIndex = chars.IndexOf(this.fName.ToLower().ToCharArray()[charCounter]);
+                inputFNameIndex = chars.IndexOf(inputName.fName.ToLower().ToCharArray()[charCounter]);
+                if (inputFNameIndex < fNameIndex)
                 {
                     return 1;
                 }
-                else if (inputFNameIndex < fNameIndex)
+                else if (inputFNameIndex > fNameIndex)
                 {
                     return -1;
                 }
@@ -120,51 +120,48 @@ public class Contact : IComparable<Contact>
     private int lNameCompare(Contact inputName)
     {
         string chars = "abcdefghijklmnopqrstuvwxyz";
+        String letterCheck;
         bool lNameEnd = false;
         bool inputLNameEnd = false;
-        int charCounter = 1;
+        int charCounter = 0;
         int lNameIndex;
         int inputLNameIndex;
-
-        //  grabs value of first letter of both first names
-        lNameIndex = chars.IndexOf(this.lName.ToLower().ToCharArray()[0]);
-        inputLNameIndex = chars.IndexOf(inputName.lName.ToLower().ToCharArray()[0]);
-
-        // checks if first letters in both first names are the same
-        if (inputLNameIndex > lNameIndex)
-        {
-            return 1;
-        }
-        else if (inputLNameIndex < lNameIndex)
-        {
-            return -1;
-        }
 
         // runs through every letter in both names until there is a differing character, a name ends, or both names have the same amount of same letters.
         while (true)
         {
-            //  grabs next character, if there are no new characters to grab the first name has ended
+            //  checks next character, if there are no new characters to check the first name has ended
+            //  if the next character is not a letter, return a -1
             try
             {
-                lNameIndex = chars.IndexOf(this.lName.ToLower().ToCharArray()[charCounter]);
+                letterCheck = String.Concat(this.lName.ToLower().ToCharArray()[charCounter]);
+                if (letterCheck.Contains("abcdefghijklmnopqrstuvwxyz"))
+                {
+                    return -1;
+                }
             }
             catch (IndexOutOfRangeException e)
             {
                 lNameEnd = true;
             }
 
-            //  grabs next character, if there are no new characters to grab the last name has ended
+            //  checks next character, if there are no new characters to check the last name has ended
+            //  if the next character is not a letter, return a -1
             try
             {
-                inputLNameIndex = chars.IndexOf(inputName.lName.ToLower().ToCharArray()[charCounter]);
+                letterCheck = String.Concat(inputName.lName.ToLower().ToCharArray()[charCounter]);
+                if (letterCheck.Contains("abcdefghijklmnopqrstuvwxyz"))
+                {
+                    return -1;
+                }
             }
             catch (IndexOutOfRangeException e)
             {
                 inputLNameEnd = true;
             }
 
-            //  checks if either of the names have ended and then checks if the individual characters are the sam
-            //  if both last names are the same, return a 0 value
+            //  checks if either of the names have ended and then checks if the individual characters are the same
+            //  if both first names are the same, call lNameCompare method
             if (lNameEnd && inputLNameEnd)
             {
                 return 0;
@@ -179,11 +176,13 @@ public class Contact : IComparable<Contact>
             }
             else
             {
-                if (inputLNameIndex > lNameIndex)
+                lNameIndex = chars.IndexOf(this.lName.ToLower().ToCharArray()[charCounter]);
+                inputLNameIndex = chars.IndexOf(inputName.lName.ToLower().ToCharArray()[charCounter]);
+                if (inputLNameIndex < lNameIndex)
                 {
                     return 1;
                 }
-                else if (inputLNameIndex < lNameIndex)
+                else if (inputLNameIndex > lNameIndex)
                 {
                     return -1;
                 }
