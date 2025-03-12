@@ -141,6 +141,33 @@ public class BinarySearchTree<T> where T : IComparable
 
     private BinaryTreeNode<T> GetInOrder(T value)
     {
+        Stack<BinaryTreeNode<T>> nodeStack = new Stack<BinaryTreeNode<T>>();
+        BinaryTreeNode<T> currNode = root;
+
+        while (currNode != null || nodeStack.Count > 0) 
+        {
+            
+            // Dig through the Left branch, adding each left node to the stack for processing.
+            while (currNode != null)
+            {
+                nodeStack.Push(currNode);
+                currNode = currNode.Right;
+            }
+
+            currNode = nodeStack.Pop();
+            if (currNode.Value.Equals(value))
+            {
+                return currNode;
+            }
+
+            // If this isn't the node we're looking for, check it's right sibling, if it's not null.
+            // Checking reloops the digging process, meaning we're always doing left most first.
+            if(currNode.Right != null)
+            {
+                currNode = currNode.Right;
+            }
+        }
+        throw new NodeNotFoundException();
     }
 
     private BinaryTreeNode<T> GetPostOrder(T value)
