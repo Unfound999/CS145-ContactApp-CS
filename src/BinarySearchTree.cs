@@ -284,10 +284,7 @@ public class BinarySearchTree<T> where T : IComparable
 
             // If this isn't the node we're looking for, check it's right sibling, if it's not null.
             // Checking reloops the digging process, meaning we're always doing left most first.
-            if (currNode.Right != null)
-            {
-                currNode = currNode.Right;
-            }
+            currNode = currNode.Right;
         }
         return allValues;
     }
