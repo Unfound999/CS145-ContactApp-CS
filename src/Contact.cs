@@ -225,7 +225,7 @@ public class Contact : IComparable
     //  prints out all data within Contact object
     public override String ToString()
     {
-        return String.Format();
+        return String.Format("\"Name: {0} {1}, Email: {2}, Phone: {3}, Address: {4}, Zip: {5}\"", fName, lName, email, phoneNum, address, zipCode);
     }
 
 }
