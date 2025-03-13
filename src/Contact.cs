@@ -213,7 +213,7 @@ public class Contact : IComparable
         if (obj.GetType() == typeof(Contact))
         {
             Contact trueObj = (Contact)obj;
-            if (this.fName == trueObj.fName && this.lName == trueObj.lName && this.phoneNum == trueObj.phoneNum && this.address == trueObj.address && this.zipCode == trueObj.zipCode && this.email == trueObj.email)
+            if (this.fName.Equals(trueObj.fName) && this.lName.Equals(trueObj.lName) && this.phoneNum.Equals(trueObj.phoneNum))
             {
                 return true;
             }
