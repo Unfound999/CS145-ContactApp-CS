@@ -202,7 +202,7 @@ public class Contact : IComparable
      *  checks if inputted object is a Contact object and if so
      *  checks if both objects contain the same first name, last name, and phonenumber
      */
-    public bool Equals(Contact obj)
+    public override bool Equals(Object obj)
     {
         if (this == obj)
         {
