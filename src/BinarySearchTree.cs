@@ -97,7 +97,7 @@ public class BinarySearchTree<T> where T : IComparable
                 }
                 currNode = currNode.Left;
             }
-            if((currNode.Value.CompareTo(newData) < 0))
+            else if((currNode.Value.CompareTo(newData) < 0))
             {
                 if (currNode.Right == null)
                 {
@@ -407,26 +407,33 @@ public class BinarySearchTree<T> where T : IComparable
     public void Remove(T value)
     {
         BinaryTreeNode<T> removeNode = this.GetPostOrder(value);
-        if (removeNode.Left == null)
-        {
+
+        if(removeNode == root && removeNode.Left == null && removeNode.Right == null){
+            root = null;
+            return;
+        }
+
+        if(removeNode.Left == null && removeNode != root){
             BinaryTreeNode<T> parent = this.GetParentNode(value);
-            if(parent.Left == removeNode)
-            {
+            if(parent.Left == removeNode){
                 parent.Left = null;
             }
-            if (parent.Right == removeNode)
-            {
+            if(parent.Right == removeNode){
                 parent.Right = null;
             }
             return;
         }
 
-        while (removeNode != null)
+        // Do the shifting of the value to the left.
+        if(removeNode.Left != null)
         {
             BinaryTreeNode<T> leftNode = removeNode.Left;
             removeNode.Value = leftNode.Value;
             removeNode.Left = leftNode.Left;
-            removeNode = removeNode.Left;
+        } else if(removeNode.Right != null){
+            BinaryTreeNode<T> rightNode = removeNode.Right;
+            removeNode.Value = rightNode.Value;
+            removeNode.Right = rightNode.Right;
         }
     }
 }
